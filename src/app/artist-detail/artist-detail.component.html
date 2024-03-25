@@ -1,0 +1,19 @@
+<button class="card-button" (click)="handleCardClick(artist)">
+  <div class="card">
+    <label>{{ artist?.name }}</label>
+    <div class="card-content">
+      <div class="card-image" *ngIf="artist?.images?.length; else elseBlock">
+        <img src="{{ artist?.images?.[0]?.url }}" alt="Image" />
+      </div>
+      <ng-template #elseBlock
+        ><div class="card-image">
+          <p>No Image</p>
+        </div>
+      </ng-template>
+      <div class="card-details">
+        <p>Popularity: {{ artist?.popularity }}</p>
+        <p>Genres: {{ artist?.genres }}</p>
+      </div>
+    </div>
+  </div>
+</button>

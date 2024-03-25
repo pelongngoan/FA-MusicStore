@@ -1,41 +1,64 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SpotifyService } from './spotify.service';
 import { Artist } from './artist';
 import { HttpClientModule } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
-import { map } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ArtistDetailComponent } from './artist-detail/artist-detail.component';
+import { Track } from './track';
+import { TrackDetailComponent } from './track-detail/track-detail.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule],
-  providers: [SpotifyService],
+  imports: [
+    RouterOutlet,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+    ArtistDetailComponent,
+    TrackDetailComponent,
+  ],
+  providers: [SpotifyService, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  artistName = new FormControl('adam');
+  // @ViewChild('audioPlayer') audioPlayerRef: ElementRef | undefined;
+  // audioPlaying: boolean = false;
   spotifyService: SpotifyService = inject(SpotifyService);
   artists: Artist[] = [];
-  // constructor(private spotify: SpotifyService) {
-  //   this.artist = this.spotifyService.searchArtists('michael jackson');
-  // }
+  artistTracks: Track[] = [];
+  searchQuery: string | undefined;
   title = 'FA-MusicStore';
-  search(query: string) {
-    // this.spotifyService.searchArtists(query).subscribe((data) => {
-    //   console.log(data);
-    //   this.artists = data.artists.items;
-    // });
-    console.log(
-      this.spotifyService
-        .searchArtists(query)
-        .pipe(map((data) => data.artists.items))
-    );
-    console.log(
-      this.spotifyService.getProfile(localStorage.getItem('access_token'))
-    );
-
-    console.log(this.spotifyService.searchArtists(query));
+  https: any;
+  public handleSearchArtist() {
+    this.artistTracks = [];
+    this.spotifyService.getArtistList(this.searchQuery).subscribe((data) => {
+      this.artists = data.artists.items;
+    });
   }
+  public handleGetArtistTopTrack(artistId: string) {
+    this.spotifyService.getArtistTopTracks(artistId).subscribe((data) => {
+      this.artistTracks = data.tracks;
+    });
+  }
+  // handleAudioClick() {
+  //   const audioPlayer = this.audioPlayerRef?.nativeElement as HTMLAudioElement;
+
+  //   if (this.audioPlaying) {
+  //     audioPlayer.pause();
+  //   } else {
+  //     const audioPlayers = document.querySelectorAll('audio');
+  //     audioPlayers.forEach((player) => {
+  //       if (player !== audioPlayer) {
+  //         (player as HTMLAudioElement).pause(); // Pause other audio if playing
+  //       }
+  //     });
+  //     audioPlayer.play();
+  //   }
+
+  //   this.audioPlaying = !this.audioPlaying;
+  // }
 }

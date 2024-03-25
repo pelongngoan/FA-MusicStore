@@ -1,0 +1,14 @@
+<td>{{ numberOfTrack }}</td>
+<td><img src="{{track?.album?.images?.[2]?.url}}" alt="" /></td>
+<td>{{ track?.album?.name }}</td>
+<td>{{ track?.album?.type }}</td>
+<td>{{ track?.album?.release_date }}</td>
+
+<td *ngIf="track?.preview_url; else elseTd">
+  <audio id="audioPlayer" controls>
+    <source src="{{ track?.preview_url }}" />
+  </audio>
+</td>
+<ng-template #elseTd>
+  <td>No Preview</td>
+</ng-template>

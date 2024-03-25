@@ -1,9 +1,9 @@
 import { ArtistImage } from './artist-image';
 
-export interface Artist {
+export interface Album {
   id: string;
   name: string;
-  popularity: number;
-  genres: string;
+  release_date: Date;
+  type: string;
   images: ArtistImage[];
 }

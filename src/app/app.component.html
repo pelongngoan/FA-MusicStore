@@ -1,35 +1,57 @@
-<div
-  style="
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-  "
->
+<div class="container">
   <div class="form-group">
     <input
-      type="text"
+      type="search"
       placeholder="Type to search for an artists"
-      formControlName="artistName"
+      [(ngModel)]="searchQuery"
+      (keyup)="handleSearchArtist()"
     />
-    <button type="button" (click)="search('adam%20levine')">Search</button>
   </div>
-  <div>
-    <label>Artist result</label>
-    <ul>
-      <!-- <li *ngFor="let artist of artists">
-        <a [routerLink]="['/artist', artist.id]">{{ artist.name }}</a>
-      </li> -->
-    </ul>
+  <h1>Artist</h1>
+  <div class="card-container" *ngIf="searchQuery; else elseBlock">
+    <div class="card" *ngFor="let artist of artists">
+      <app-artist-detail
+        [artist]="artist"
+        (newItemEvent)="handleGetArtistTopTrack($event)"
+      ></app-artist-detail>
+    </div>
   </div>
-  <div>
-    <label>Artist Top Track</label>
-    <ul>
-      <!-- <li>
-        <a [routerLink]="['/about']">About</a>
-      </li> -->
-    </ul>
+  <ng-template #elseBlock> </ng-template>
+  <h1>Top tracks</h1>
+
+  <div class="track-container" *ngIf="searchQuery; else elseBlock">
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Image</th>
+          <th>Album Name</th>
+          <th>Album Type</th>
+          <th>Release Date</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let artistTrack of artistTracks; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><img src="{{artistTrack?.album?.images?.[2]?.url}}" alt="" /></td>
+          <td>{{ artistTrack?.album?.name }}</td>
+          <td>{{ artistTrack?.album?.type }}</td>
+          <td>{{ artistTrack?.album?.release_date }}</td>
+          <td *ngIf="artistTrack?.preview_url; else elseTd">
+            <audio id="audioPlayer" controls>
+              <source src="{{ artistTrack?.preview_url }}" />
+            </audio>
+          </td>
+          <ng-template #elseTd>
+            <td>No Preview</td>
+          </ng-template>
+          <!-- <app-track-detail
+            [track]="artistTrack"
+            numberOfTrack="{{ i }}"
+          ></app-track-detail> -->
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-<router-outlet></router-outlet>
