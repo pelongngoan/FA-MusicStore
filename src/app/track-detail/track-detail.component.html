@@ -3,7 +3,6 @@
 <td>{{ track?.album?.name }}</td>
 <td>{{ track?.album?.type }}</td>
 <td>{{ track?.album?.release_date }}</td>
-
 <td *ngIf="track?.preview_url; else elseTd">
   <audio id="audioPlayer" controls>
     <source src="{{ track?.preview_url }}" />

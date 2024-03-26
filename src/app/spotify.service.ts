@@ -10,7 +10,7 @@ import express from 'express';
 })
 export class SpotifyService {
   private authKey =
-    'Bearer BQDAy_NqvBj_w17KnMIdDc34PNGzgebG55-0SAq_32feK9aBkFn0rofz97CsOgx-Sh2uJeuKOUFESeCpdAnOao88QYV5qxFgK6siLbkHVa7jxa75dhvyOtIeIPQGtYXC91xFr5WRJfQt_9wI5ncpleFTcg5VxG8fLaHxef7iHWtxZiWrVhUOSH0UWZOkWoHVdQNvEcaVnKVTk_H9xFER0p9X68BPP_-MJPRjoa6BXro8X6Osx8vtN0qQXkeKcMCiWqEBk8aGG9TTYl4PmS6T';
+    'Bearer BQDVWGA__a4jC9CLiF50770jI4zVrBfQij8xZep2H-RR6S1M30GA5Cep8sU6W4WHeSg4d-1NxoMfh8n2PPmyogjNoIyQ8Ir_vk7pK5ibhwWoBlLrXem-Gj3YElHSeIesFXnTmR1WOhrx93DjsCv5xtdeaPG9Qn4FQiv_TNTtP9cTtwVVmMmEPbw6EzkMTEhyPiNlY1CJlXgCANob_Ddg04RRlXU4UEWlLnJjpzgAA8lPRst2_HGqYvGM6cy4pOE6n15TzYlGJZB5hNMVhz8i';
   private httpOptions = {
     headers: new HttpHeaders({
       Authorization: this.authKey,
